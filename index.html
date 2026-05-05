@@ -1,95 +1,659 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Pipeline Orchestrator | Holistic & Functional Medicine</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <meta name="description" content="Wholistic Revival — AI automation for functional, integrative & holistic medicine clinics. Done-for-you systems that handle the work so you can focus on patients.">
+  <title>Wholistic Revival — AI Automation for Holistic Medicine Clinics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">
   <style>
-    .hero-bg { background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://picsum.photos/id/1015/2000/1200') center/cover no-repeat; }
-    .section-header { font-family: 'Georgia', serif; }
+    :root {
+      --bg: oklch(0.98 0.008 95);          /* warm off-white */
+      --surface: oklch(0.96 0.012 90);     /* soft cream */
+      --surface-2: oklch(0.93 0.015 90);   /* slightly deeper cream */
+      --ink: oklch(0.22 0.015 200);        /* deep blue-ink */
+      --ink-soft: oklch(0.42 0.012 200);   /* secondary text */
+      --ink-mute: oklch(0.62 0.010 200);   /* tertiary text */
+      --line: oklch(0.88 0.012 90);        /* hairline */
+      --primary: oklch(0.52 0.075 180);    /* sage-teal */
+      --primary-deep: oklch(0.42 0.075 180);
+      --primary-soft: oklch(0.94 0.025 180);
+      --accent: oklch(0.62 0.10 145);      /* warm sage-green for life */
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      font-size: 17px;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .display {
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      font-variation-settings: "opsz" 144;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+    .narrow { max-width: 720px; margin: 0 auto; padding: 0 28px; }
+
+    /* ---------- NAV ---------- */
+    nav {
+      position: sticky; top: 0; z-index: 50;
+      background: color-mix(in oklch, var(--bg) 88%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      padding: 18px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none; color: var(--ink);
+    }
+    .brand-mark {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: var(--ink);
+      color: var(--bg);
+      display: grid; place-items: center;
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+    .brand-name {
+      font-family: 'Fraunces', serif;
+      font-weight: 500;
+      font-size: 19px;
+      letter-spacing: -0.01em;
+    }
+    .nav-links {
+      display: flex; gap: 32px;
+      font-size: 14px; font-weight: 500;
+    }
+    .nav-links a {
+      color: var(--ink-soft);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--primary); }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 22px;
+      border-radius: 999px;
+      font-size: 14px; font-weight: 600;
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: var(--ink);
+      color: var(--bg);
+    }
+    .btn-primary:hover {
+      background: var(--primary-deep);
+      transform: translateY(-1px);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink);
+      border-color: var(--line);
+    }
+    .btn-ghost:hover {
+      border-color: var(--ink);
+    }
+    .btn-large { padding: 16px 30px; font-size: 15px; }
+
+    @media (max-width: 720px) {
+      .nav-links { display: none; }
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      padding: 120px 0 110px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(60% 50% at 80% 0%, color-mix(in oklch, var(--primary) 14%, transparent), transparent 70%),
+        radial-gradient(50% 50% at 10% 100%, color-mix(in oklch, var(--accent) 10%, transparent), transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 13px; font-weight: 500;
+      color: var(--ink-soft);
+      margin-bottom: 32px;
+      padding: 8px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--bg);
+    }
+    .eyebrow .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px color-mix(in oklch, var(--accent) 25%, transparent);
+    }
+    h1.display {
+      font-size: clamp(44px, 7vw, 76px);
+    }
+    h1.display em {
+      font-style: italic;
+      color: var(--primary);
+      font-weight: 400;
+    }
+    .hero-sub {
+      margin-top: 28px;
+      font-size: clamp(18px, 1.6vw, 21px);
+      color: var(--ink-soft);
+      max-width: 620px;
+      line-height: 1.55;
+    }
+    .hero-stat {
+      margin-top: 44px;
+      padding-top: 32px;
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      max-width: 620px;
+    }
+    .hero-stat-num {
+      font-family: 'Fraunces', serif;
+      font-size: 42px;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 14px;
+      color: var(--ink-mute);
+      max-width: 480px;
+    }
+    .hero-stat-label strong { color: var(--ink-soft); font-weight: 500; }
+    .hero-cta {
+      margin-top: 44px;
+      display: flex; gap: 14px; flex-wrap: wrap;
+    }
+
+    /* ---------- SECTION FRAME ---------- */
+    section { padding: 100px 0; }
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 18px;
+    }
+    h2.display {
+      font-size: clamp(32px, 4vw, 46px);
+      margin-bottom: 20px;
+    }
+    .section-sub {
+      font-size: 18px;
+      color: var(--ink-soft);
+      max-width: 580px;
+      line-height: 1.6;
+    }
+
+    /* ---------- MISSION ---------- */
+    .mission {
+      background: var(--surface);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .mission-text {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: clamp(22px, 2.4vw, 30px);
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-top: 32px;
+    }
+    .mission-text em {
+      font-style: italic;
+      color: var(--primary-deep);
+    }
+
+    /* ---------- WHAT I DO ---------- */
+    .pillars {
+      margin-top: 56px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .pillar {
+      background: var(--bg);
+      padding: 36px 32px;
+    }
+    .pillar-num {
+      font-family: 'Fraunces', serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--primary);
+      margin-bottom: 14px;
+      letter-spacing: 0.04em;
+    }
+    .pillar-title {
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+    }
+    .pillar-body {
+      font-size: 15px;
+      color: var(--ink-soft);
+      line-height: 1.55;
+    }
+    @media (max-width: 760px) {
+      .pillars { grid-template-columns: 1fr; }
+    }
+
+    /* ---------- ABOUT ---------- */
+    .about { background: var(--surface); border-top: 1px solid var(--line); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .about-photo {
+      aspect-ratio: 4 / 5;
+      border-radius: 12px;
+      background:
+        repeating-linear-gradient(45deg, var(--surface-2), var(--surface-2) 12px, transparent 12px, transparent 24px),
+        var(--surface);
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      color: var(--ink-mute);
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+    }
+    .about-text p { margin-bottom: 18px; color: var(--ink-soft); font-size: 17px; line-height: 1.7; }
+    .about-text p:first-of-type { color: var(--ink); font-size: 19px; }
+    .about-sign {
+      margin-top: 36px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .about-sign-role {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-mute);
+      letter-spacing: 0.04em;
+      margin-top: 4px;
+    }
+    @media (max-width: 800px) {
+      .about-grid { grid-template-columns: 1fr; gap: 36px; }
+      .about-photo { max-width: 280px; aspect-ratio: 1; }
+    }
+
+    /* ---------- CONTACT ---------- */
+    .contact-shell {
+      background: var(--ink);
+      color: var(--bg);
+      border-radius: 24px;
+      padding: 72px 56px;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+    .contact-shell .section-label { color: color-mix(in oklch, var(--primary) 70%, white); }
+    .contact-shell h2 { color: var(--bg); }
+    .contact-shell .section-sub { color: color-mix(in oklch, var(--bg) 75%, transparent); }
+
+    form { margin-top: 40px; display: grid; gap: 22px; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    @media (max-width: 600px) { .field-row { grid-template-columns: 1fr; } }
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: color-mix(in oklch, var(--bg) 60%, transparent);
+      margin-bottom: 10px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 14px 18px;
+      background: color-mix(in oklch, var(--bg) 8%, transparent);
+      border: 1px solid color-mix(in oklch, var(--bg) 18%, transparent);
+      border-radius: 10px;
+      color: var(--bg);
+      font-family: inherit;
+      font-size: 16px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: color-mix(in oklch, var(--bg) 12%, transparent);
+    }
+    input::placeholder, textarea::placeholder {
+      color: color-mix(in oklch, var(--bg) 40%, transparent);
+    }
+    textarea { resize: vertical; min-height: 130px; }
+
+    .form-submit {
+      background: var(--bg);
+      color: var(--ink);
+      border: none;
+      padding: 16px 28px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.2s;
+      justify-self: start;
+      font-family: inherit;
+    }
+    .form-submit:hover { background: var(--primary-soft); transform: translateY(-1px); }
+    .form-submit:disabled { opacity: 0.6; cursor: wait; }
+
+    .form-status {
+      font-size: 14px;
+      color: color-mix(in oklch, var(--bg) 70%, transparent);
+      min-height: 20px;
+    }
+    .form-status.success { color: var(--accent); }
+    .form-status.error { color: oklch(0.7 0.15 25); }
+
+    .contact-meta {
+      margin-top: 36px;
+      padding-top: 28px;
+      border-top: 1px solid color-mix(in oklch, var(--bg) 15%, transparent);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      font-size: 14px;
+      color: color-mix(in oklch, var(--bg) 60%, transparent);
+    }
+    .contact-meta a { color: var(--bg); text-decoration: none; }
+    .contact-meta a:hover { color: var(--primary-soft); }
+
+    @media (max-width: 600px) {
+      .contact-shell { padding: 48px 28px; border-radius: 18px; }
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      padding: 48px 0 56px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      color: var(--ink-mute);
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-brand {
+      font-family: 'Fraunces', serif;
+      font-size: 15px;
+      color: var(--ink-soft);
+    }
   </style>
 </head>
-<body class="bg-zinc-50 text-zinc-800 font-sans">
+<body>
 
   <!-- NAV -->
-  <nav class="bg-white border-b sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <div class="w-9 h-9 bg-emerald-700 rounded-2xl flex items-center justify-center text-white font-bold text-2xl">A</div>
-        <div>
-          <span class="font-semibold text-2xl tracking-tight">AI Pipeline</span>
-          <span class="text-emerald-700 font-semibold">Orchestrator</span>
-        </div>
+  <nav>
+    <div class="nav-inner">
+      <a href="#top" class="brand">
+        <div class="brand-mark">W</div>
+        <span class="brand-name">Wholistic Revival</span>
+      </a>
+      <div class="nav-links">
+        <a href="#mission">Mission</a>
+        <a href="#what">What I Do</a>
+        <a href="#about">About</a>
       </div>
-      <div class="hidden md:flex gap-8 text-sm font-medium">
-        <a href="#problem" class="hover:text-emerald-700">Problem</a>
-        <a href="#solution" class="hover:text-emerald-700">Solution</a>
-        <a href="#for-you" class="hover:text-emerald-700">For Your Clinic</a>
-        <a href="#contact" class="hover:text-emerald-700">Contact</a>
-      </div>
-      <a href="#contact" class="bg-emerald-700 hover:bg-emerald-800 text-white px-6 py-3 rounded-2xl text-sm font-semibold">Get In Touch</a>
+      <a href="#contact" class="btn btn-primary">Get in touch</a>
     </div>
   </nav>
 
   <!-- HERO -->
-  <section class="hero-bg text-white py-24 md:py-32">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-      <h1 class="text-5xl md:text-6xl font-bold leading-tight mb-6">
-        Stop leaking thousands every month<br>from missed leads, no-shows &amp; lapsed patients
+  <section class="hero" id="top">
+    <div class="container hero-content">
+      <span class="eyebrow"><span class="dot"></span> AI automation for holistic medicine clinics</span>
+      <h1 class="display">
+        Practice medicine.<br>
+        Not <em>paperwork.</em>
       </h1>
-      <p class="text-xl md:text-2xl mb-10 text-emerald-100">
-        We glue your existing AI tools into one reliable patient pipeline with full accountability.
+      <p class="hero-sub">
+        You started your clinic to help people heal — not to chase missed calls, no-shows, and lapsed patients. I build the AI systems that quietly handle the rest.
       </p>
-      <a href="#contact" class="bg-white text-emerald-800 hover:bg-emerald-50 px-10 py-4 rounded-3xl text-lg font-semibold inline-block">
-        Book Free Pipeline Audit
-      </a>
+
+      <div class="hero-stat">
+        <div>
+          <div class="hero-stat-num">72%</div>
+          <p class="hero-stat-label"><strong>of businesses have already adopted AI</strong> for at least one function (Forbes, 2025). The clinics winning in 2026 aren't doing it alone.</p>
+        </div>
+      </div>
+
+      <div class="hero-cta">
+        <a href="#contact" class="btn btn-primary btn-large">Let's make it happen →</a>
+        <a href="#what" class="btn btn-ghost btn-large">How it works</a>
+      </div>
     </div>
   </section>
 
-  <!-- PROBLEM, SOLUTION, FOR YOU sections stay the same as before — I'm keeping this version short. You can paste them from the previous code if needed. -->
-
-  <!-- CONTACT SECTION WITH FORM -->
-  <section id="contact" class="py-20 bg-emerald-700 text-white">
-    <div class="max-w-2xl mx-auto px-6">
-      <h2 class="text-4xl font-bold text-center mb-6">Ready to plug your leaks?</h2>
-      <p class="text-xl text-center mb-10">Send me a message or book a quick call. I reply within 24 hours.</p>
-      
-      <form action="https://formspree.io/f/YOUR_CODE_HERE" method="POST" class="space-y-6">
-        <div>
-          <label class="block text-sm mb-2">Your Name</label>
-          <input type="text" name="name" required class="w-full px-6 py-4 rounded-2xl bg-white/10 border border-white/30 focus:outline-none focus:border-white text-white placeholder-zinc-300">
-        </div>
-        <div>
-          <label class="block text-sm mb-2">Clinic Name</label>
-          <input type="text" name="clinic" class="w-full px-6 py-4 rounded-2xl bg-white/10 border border-white/30 focus:outline-none focus:border-white text-white placeholder-zinc-300">
-        </div>
-        <div>
-          <label class="block text-sm mb-2">Email Address</label>
-          <input type="email" name="email" required class="w-full px-6 py-4 rounded-2xl bg-white/10 border border-white/30 focus:outline-none focus:border-white text-white placeholder-zinc-300">
-        </div>
-        <div>
-          <label class="block text-sm mb-2">Message</label>
-          <textarea name="message" rows="5" required class="w-full px-6 py-4 rounded-2xl bg-white/10 border border-white/30 focus:outline-none focus:border-white text-white placeholder-zinc-300" placeholder="Tell me about your current AI tools..."></textarea>
-        </div>
-        <button type="submit" class="w-full bg-white text-emerald-800 hover:bg-emerald-50 py-5 rounded-3xl text-xl font-semibold">
-          Send Message
-        </button>
-      </form>
-
-      <p class="text-center mt-8 opacity-75">
-        Or email me directly: <a href="mailto:jordan@yourdomain.com" class="underline">jordan@yourdomain.com</a>
+  <!-- MISSION -->
+  <section class="mission" id="mission">
+    <div class="narrow">
+      <div class="section-label">The mission</div>
+      <h2 class="display">A done-for-you AI system, built around <em>your</em> practice.</h2>
+      <p class="mission-text">
+        Most clinics are bleeding revenue from <em>fragmented AI tools</em>, unanswered leads, and lapsed patients — while the real work of healing gets pushed aside. I glue your stack together and keep it running with full accountability, so you can spend quality time with patients and take home more at the end of the day.
       </p>
+    </div>
+  </section>
+
+  <!-- WHAT I DO -->
+  <section id="what">
+    <div class="container">
+      <div class="section-label">What I do</div>
+      <h2 class="display">Three quiet systems<br>working in the background.</h2>
+      <p class="section-sub">Built for functional, integrative, and holistic medicine clinics. No bloat. No new logins for your front desk to learn.</p>
+
+      <div class="pillars">
+        <div class="pillar">
+          <div class="pillar-num">01</div>
+          <div class="pillar-title">Capture every lead</div>
+          <p class="pillar-body">Missed calls, web forms, and DMs get answered within minutes — not days. Nothing slips through, even on your busiest weeks.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">02</div>
+          <div class="pillar-title">Fill your calendar</div>
+          <p class="pillar-body">Automated reminders, rebooking, and reactivation flows that bring lapsed patients back and cut no-shows down to size.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">03</div>
+          <div class="pillar-title">Keep it all running</div>
+          <p class="pillar-body">Your existing AI tools, glued together and monitored. One person accountable for the whole pipeline — me.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-photo">[ photo of Jordan ]</div>
+        <div>
+          <div class="section-label">About</div>
+          <h2 class="display">Hi, I'm Jordan.</h2>
+          <div class="about-text" style="margin-top: 28px;">
+            <p>I'm the owner-operator of Wholistic Revival and the AI Pipeline Orchestrator for functional, integrative, and holistic medicine clinics.</p>
+            <p>I've lived the same reality you're in — watching thousands slip away every month from fragmented tools, unanswered leads, and patients who never came back.</p>
+            <p>So I built a done-for-you system that keeps your AI stack running, quietly and accountably, so you can finally spend your time on the work you got into this for.</p>
+          </div>
+          <div class="about-sign">
+            Jordan Clement
+            <span class="about-sign-role">Founder · Wholistic Revival</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-shell">
+        <div class="section-label">Get in touch</div>
+        <h2 class="display">Ready to reclaim your time<br>and revenue?</h2>
+        <p class="section-sub">Send me a note. I reply within 24 hours.</p>
+
+        <form id="contact-form" novalidate>
+          <div class="field-row">
+            <div>
+              <label for="name">Your name</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            <div>
+              <label for="clinic">Clinic name</label>
+              <input type="text" id="clinic" name="clinic">
+            </div>
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required placeholder="Tell me about your current AI tools or biggest bottleneck..."></textarea>
+          </div>
+          <button type="submit" class="form-submit" id="submit-btn">Send message →</button>
+          <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+        </form>
+
+        <div class="contact-meta">
+          <span>Or reach me directly:</span>
+          <a href="/cdn-cgi/l/email-protection#d993b6abbdb8b78b9ab5bcb4bcb7ad99a9abb6adb6b7f7b4bc"><span class="__cf_email__" data-cfemail="c288adb0a6a3ac9081aea7afa7acb682b2b0adb6adacecafa7">[email&#160;protected]</span></a>
+          <a href="tel:+16128162161">612-816-2161</a>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="bg-zinc-900 text-zinc-400 py-12">
-    <div class="max-w-6xl mx-auto px-6 text-center text-sm">
-      <p>© 2026 AI Pipeline Orchestrator • Jordan Clement</p>
-      <p class="mt-2">Serving functional & integrative medicine clinics</p>
+  <footer>
+    <div class="container footer-inner">
+      <span class="footer-brand">Wholistic Revival</span>
+      <span>© 2026 · AI automation for holistic medicine clinics · Minnesota &amp; Tennessee</span>
     </div>
   </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // Contact form: mailto fallback so it works today, swappable to Formspree later.
+    // To enable Formspree: replace FORMSPREE_ENDPOINT below with your form URL
+    // (e.g. "https://formspree.io/f/abcd1234") and the script will POST to it.
+    const FORMSPREE_ENDPOINT = ""; // <-- paste your Formspree URL here
+
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('form-status');
+    const submitBtn = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.className = 'form-status';
+      status.textContent = '';
+
+      const data = {
+        name: form.name.value.trim(),
+        clinic: form.clinic.value.trim(),
+        email: form.email.value.trim(),
+        message: form.message.value.trim(),
+      };
+
+      if (!data.name || !data.email || !data.message) {
+        status.className = 'form-status error';
+        status.textContent = 'Please fill in your name, email, and message.';
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+
+      if (FORMSPREE_ENDPOINT) {
+        try {
+          const res = await fetch(FORMSPREE_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+          });
+          if (res.ok) {
+            form.reset();
+            status.className = 'form-status success';
+            status.textContent = 'Thanks — message received. I\'ll get back to you within 24 hours.';
+          } else {
+            throw new Error('Send failed');
+          }
+        } catch (err) {
+          status.className = 'form-status error';
+          status.innerHTML = 'Something went wrong. Email me directly at <a href="mailto:JordanRClement@proton.me" style="color:inherit;text-decoration:underline">JordanRClement@proton.me</a>.';
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send message →';
+        }
+      } else {
+        // No Formspree configured yet → open user's email client with prefilled message.
+        const subject = encodeURIComponent(`Inquiry from ${data.name}${data.clinic ? ' · ' + data.clinic : ''}`);
+        const body = encodeURIComponent(
+          `Name: ${data.name}\n` +
+          `Clinic: ${data.clinic || '—'}\n` +
+          `Email: ${data.email}\n\n` +
+          `${data.message}\n`
+        );
+        window.location.href = `mailto:JordanRClement@proton.me?subject=${subject}&body=${body}`;
+        status.className = 'form-status success';
+        status.textContent = 'Opening your email app to finish sending…';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send message →';
+      }
+    });
+  </script>
 </body>
 </html>
