@@ -568,12 +568,6 @@
           <button type="submit" class="form-submit" id="submit-btn">Send message →</button>
           <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
         </form>
-
-        <div class="contact-meta">
-          <span>Or reach me directly:</span>
-          <a href="/cdn-cgi/l/email-protection#d993b6abbdb8b78b9ab5bcb4bcb7ad99a9abb6adb6b7f7b4bc"><span class="__cf_email__" data-cfemail="c288adb0a6a3ac9081aea7afa7acb682b2b0adb6adacecafa7">[email&#160;protected]</span></a>
-          <a href="tel:+16128162161">612-816-2161</a>
-        </div>
       </div>
     </div>
   </section>
@@ -586,10 +580,8 @@
     </div>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    // Contact form: mailto fallback so it works today, swappable to Formspree later.
-    // To enable Formspree: replace FORMSPREE_ENDPOINT below with your form URL
-    // (e.g. "https://formspree.io/f/abcd1234") and the script will POST to it.
+  <script>
+    // Contact form - connected to Formspree
     const FORMSPREE_ENDPOINT = "https://formspree.io/f/maqvdpzp";
 
     const form = document.getElementById('contact-form');
@@ -617,39 +609,29 @@
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sending…';
 
-      if (FORMSPREE_ENDPOINT) {
-        try {
-          const res = await fetch(FORMSPREE_ENDPOINT, {
-            method: 'POST',
-            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
-          });
-          if (res.ok) {
-            form.reset();
-            status.className = 'form-status success';
-            status.textContent = 'Thanks — message received. I\'ll get back to you within 24 hours.';
-          } else {
-            throw new Error('Send failed');
-          }
-        } catch (err) {
-          status.className = 'form-status error';
-          status.innerHTML = 'Something went wrong. Email me directly at <a href="mailto:JordanRClement@proton.me" style="color:inherit;text-decoration:underline">JordanRClement@proton.me</a>.';
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Send message →';
+      try {
+        const formData = new FormData();
+        formData.append('name', data.name);
+        formData.append('clinic', data.clinic || '');
+        formData.append('email', data.email);
+        formData.append('message', data.message);
+
+        const res = await fetch(FORMSPREE_ENDPOINT, {
+          method: 'POST',
+          body: formData
+        });
+
+        if (res.ok) {
+          form.reset();
+          status.className = 'form-status success';
+          status.textContent = 'Thanks — message received. I\'ll get back to you within 24 hours.';
+        } else {
+          throw new Error('Send failed');
         }
-      } else {
-        // No Formspree configured yet → open user's email client with prefilled message.
-        const subject = encodeURIComponent(`Inquiry from ${data.name}${data.clinic ? ' · ' + data.clinic : ''}`);
-        const body = encodeURIComponent(
-          `Name: ${data.name}\n` +
-          `Clinic: ${data.clinic || '—'}\n` +
-          `Email: ${data.email}\n\n` +
-          `${data.message}\n`
-        );
-        window.location.href = `mailto:JordanRClement@proton.me?subject=${subject}&body=${body}`;
-        status.className = 'form-status success';
-        status.textContent = 'Opening your email app to finish sending…';
+      } catch (err) {
+        status.className = 'form-status error';
+        status.textContent = 'Something went wrong. Please try again.';
+      } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Send message →';
       }
